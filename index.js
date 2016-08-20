@@ -7,6 +7,7 @@ if (!process.env.token) {
 
 var Rita = require('rita');
 var Botkit = require('botkit');
+var responses = require('./responses');
 
 var controller = Botkit.slackbot({
     debug: true
@@ -19,11 +20,10 @@ var bot = controller.spawn({
 var lexicon = new Rita.RiLexicon();
 
 controller.hears('i[\'m|\s{0,}am]{0,}(.+)', 'direct_message,direct_mention,mention', function (bot, message) {
-    var matches = message.text.match(/i[\'m|\s{0,}am]{0,}(.+)/i),
-        name = matches ? matches[1] : '';
+    var res = responses.hi_i_am_dad(message.text);
 
-    if (name) {
-        bot.reply(message, 'Hi ' + name + ', I\'m dad.');
+    if (res) {
+        bot.reply(message, res);
     }
 });
 
