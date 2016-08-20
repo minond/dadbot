@@ -10,7 +10,7 @@ var Botkit = require('botkit');
 var responses = require('./responses');
 
 var controller = Botkit.slackbot({
-    debug: true
+    debug: process.env.DEBUG || process.env.debug
 });
 
 var bot = controller.spawn({
