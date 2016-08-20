@@ -19,7 +19,7 @@ var bot = controller.spawn({
 
 var lexicon = new Rita.RiLexicon();
 
-controller.hears('i[\'m|\s{0,}am]{0,}(.+)', 'direct_message,direct_mention,mention', function (bot, message) {
+controller.hears('(^|\W)i[\'m|\s{0,}am]{0,}(.+)', 'direct_message,direct_mention,mention', function (bot, message) {
     var res = responses.hi_i_am_dad(message.text);
 
     if (res) {

@@ -1,6 +1,6 @@
 'use strict';
 
-var REGEX_I_AM_NAME_EXTRACT = /i[\'m|\s{0,}am]{0,}(.+)/i;
+var REGEX_I_AM_NAME_EXTRACT = /(^|\W)i[\'m|\s{0,}am]{0,}(.+)/i;
 
 /**
  * @minond: @dadbot I'm hungry
@@ -8,7 +8,7 @@ var REGEX_I_AM_NAME_EXTRACT = /i[\'m|\s{0,}am]{0,}(.+)/i;
  */
 function hi_i_am_dad(str) {
     var matches = str.match(REGEX_I_AM_NAME_EXTRACT),
-        name = matches ? matches[1] : '';
+        name = matches ? matches[2] : '';
 
     return name ? 'Hi ' + name + ', I\'m dad.' : false;
 }
