@@ -1,0 +1,23 @@
+{
+  "name": "datbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/minond/dadbot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/minond/dadbot/issues"
+  },
+  "homepage": "https://github.com/minond/dadbot#readme",
+  "dependencies": {
+    "botkit": "0.2.2",
+    "rita": "1.1.40"
+  }
+}
