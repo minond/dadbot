@@ -28,15 +28,14 @@ controller.hears('(^|\W)i[\'m|\s{0,}am]{0,}(.+)', 'direct_message,direct_mention
 });
 
 controller.hears('', 'direct_message,direct_mention,mention,ambient', function(bot, message) {
-
-        var words = message.text.split(/\s*\b\s*/);
-        for (var i = 0; i < words.length-1; i++) {
-            if( lexicon.isAdjective(words[i]) == true && words.length > 1){
-                var rhymes = lexicon.rhymes(words[i+1]);
-                if(rhymes.length > 0){
-                    var random_id = Math.random()*rhymes.length|0
-                    return bot.reply(message, "More like " + words[i] + " " + rhymes[random_id]);
-                }
+    var words = message.text.split(/\s*\b\s*/);
+    for (var i = 0; i < words.length-1; i++) {
+        if( lexicon.isAdjective(words[i]) == true && words.length > 1){
+            var rhymes = lexicon.rhymes(words[i+1]);
+            if(rhymes.length > 0){
+                var random_id = Math.random()*rhymes.length|0
+                return bot.reply(message, "More like " + words[i] + " " + rhymes[random_id]);
             }
         }
-    });
+    }
+});
