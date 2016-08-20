@@ -34,7 +34,7 @@ controller.hears('', 'direct_message,direct_mention,mention,ambient', function(b
             var rhymes = lexicon.rhymes(words[i+1]);
             if(rhymes.length > 0){
                 var random_id = Math.random()*rhymes.length|0
-                return bot.reply(message, "More like " + words[i] + " " + rhymes[random_id]);
+                bot.reply(message, "More like " + words[i] + " " + rhymes[random_id]);
             }
         }
     }
