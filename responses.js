@@ -5,6 +5,7 @@ var REGEX_I_AM_NAME_EXTRACT = /(^|\W)i(m|\'m|\s{0,}am)\s{0,}(.+)/i;
 var fs = require('fs');
 var Rita = require('rita');
 var test = require('./utils').test;
+var JSTR = JSON.stringify;
 
 var JOKES = fs.readFileSync('./jokes.txt').toString().split('\n');
 var JOKES_BY_NOUN = JOKES.reduce(function (store, joke) {
@@ -54,6 +55,49 @@ function find_noun(str) {
     }
 }
 
+test(JSTR(find_nouns(false)) === JSTR([]));
+test(JSTR(find_nouns('')) === JSTR([]));
+test(JSTR(find_nouns('the new beef store')) === JSTR(['beef', 'store']));
+function find_nouns(str) {
+    var ristr, pos, nn, nns;
+
+    ristr = Rita.RiString(str);
+
+    try {
+        pos = ristr.pos();
+    } catch (ignore) {
+        pos = [];
+    }
+
+    nn = find_indexes_of('nn', pos);
+    nns = find_indexes_of('nns', pos);
+
+    return [].concat(nn, nns).sort().reduce(function (nouns, index) {
+        var word;
+
+        try {
+            word = ristr.wordAt(index);
+            if (nouns.indexOf(word) === -1) {
+                nouns.push(word);
+            }
+        } catch (ignore) {}
+
+        return nouns;
+    }, []);
+}
+
+test(JSTR(find_indexes_of(1, [3, 2, 1])) === JSTR([2]));
+test(JSTR(find_indexes_of(1, [3, 1, 1])) === JSTR([1, 2]));
+function find_indexes_of(search, arr) {
+    return arr.reduce(function (store, val, index) {
+        if (val === search) {
+            store.push(index);
+        }
+
+        return store;
+    }, []);
+}
+
 test(best_joke_comeback() === false);
 test(best_joke_comeback('') === false);
 test(best_joke_comeback('cheese'), 'What cheese can never be yours? Nacho cheese.');
@@ -67,6 +111,8 @@ function best_joke_comeback(str) {
 module.exports = {
     JOKES: JOKES,
     JOKES_BY_NOUN: JOKES_BY_NOUN,
+    find_noun: find_noun,
+    find_nouns: find_nouns,
     hi_i_am_dad: hi_i_am_dad,
     best_joke_comeback: best_joke_comeback,
 };
