@@ -34,16 +34,14 @@ controller.hears('(^|\W)i[\'m|\s{0,}am]{0,}(.+)', 'direct_message,direct_mention
     }
 });
 
-controller.hears(['really', 'completely', 'totally', 'majorly', 'utterly', 'wholly', 'absolutely', 'pretty'], 'direct_message,direct_mention,mention,ambient', function(bot, message) {
-    var words = message.text.split(/\s*\b\s*/);
-    for (var i = 0; i < words.length; i++) {
-        if( lexicon.isAdjective(words[i]) == true && words.length > 1){
-            var rhymes = lexicon.rhymes(words[i+1]);
-            if(rhymes.length > 0){
-                var random_id = Math.random()*rhymes.length|0
-                return bot.reply(message, "More like " + words[i] + " " + rhymes[random_id]);
-            }
-        }
+controller.hears(['really (.*)', 'real (.*)', 'kindof (.*)', 'completely (.*)', 'totally (.*)', 'majorly (.*)', 'utterly (.*)', 'wholly (.*)', 'absolutely (.*)', 'pretty (.*)', 'fuckin (.*)', 'fucking (.*)'], 'direct_message,direct_mention,mention,ambient', function(bot, message) {
+    var phrase = new Rita.RiString(message.match[0]);
+    var word = message.match[1];
+    var rhymes = lexicon.rhymes(word);
+    if( rhymes.length > 0){
+        var random_id = Math.random()*rhymes.length|0
+        phrase.replaceFirst(message.match[1], rhymes[random_id]);
+        return bot.reply(message, "More like " + phrase.text());
     }
 });
 
