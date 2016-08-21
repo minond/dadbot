@@ -18,6 +18,7 @@
   "homepage": "https://github.com/minond/dadbot#readme",
   "dependencies": {
     "botkit": "0.2.2",
+    "request": "^2.74.0",
     "rita": "1.1.40"
   }
 }
