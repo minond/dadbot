@@ -13,7 +13,7 @@ var JOKES_BY_NOUN = JOKES.reduce(function (store, joke) {
     try {
         noun = find_noun(joke);
 
-        if (noun.indexOf('\'') === -1) {
+        if (noun && noun.indexOf('\'') === -1) {
             store[noun] = joke;
         }
     } catch (ignore) {}
@@ -54,11 +54,14 @@ function find_noun(str) {
     }
 }
 
+test(best_joke_comeback() === false);
+test(best_joke_comeback('') === false);
 test(best_joke_comeback('cheese'), 'What cheese can never be yours? Nacho cheese.');
 test(best_joke_comeback('fish'), 'What did the fish say when it swam into a wall? Damn!');
 test(best_joke_comeback('zoo'), 'I went to the zoo the other day, there was only one dog in it. It was a shitzu.');
 function best_joke_comeback(str) {
-    return JOKES_BY_NOUN[find_noun(str)];
+    var noun = find_noun(str);
+    return noun ? JOKES_BY_NOUN[find_noun(str)] : false;
 }
 
 module.exports = {
