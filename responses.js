@@ -77,7 +77,7 @@ function find_nouns(str) {
 
         try {
             word = ristr.wordAt(index);
-            if (nouns.indexOf(word) === -1) {
+            if (nouns.indexOf(word) === -1 && word.indexOf('\'') === -1) {
                 nouns.push(word);
             }
         } catch (ignore) {}
