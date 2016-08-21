@@ -9,6 +9,7 @@ var Rita = require('rita');
 var Botkit = require('botkit');
 var responses = require('./responses');
 var request = require('request');
+var sentiment = require('sentiment');
 
 var chattiness_index = 1;
 
@@ -54,7 +55,17 @@ controller.hears(Object.keys(responses.JOKES_BY_NOUN), 'ambient', function (bot,
 });
 
 controller.hears('', 'direct_message,direct_mention,mention,ambient', function(bot, message) {
-    if( Math.random() < chattiness_index ){
+    console.log("(" + message.text + ") sentiment: " + sentiment(message.text).score);
+    if (sentiment(message.text).score <= -3 ){
+        var url = 'http://api.giphy.com/v1/gifs/trending?api_key=dc6zaTOxFJmzC';
+        request.get(url, function (err, res, body) {
+            var data = JSON.parse(body)['data'];
+            if(data.length > 0){
+                var random_id = Math.random() * data.length | 0;
+                return bot.reply(message, "Maybe this will cheer you up... " + data[random_id].bitly_url);
+            }
+        })
+    } else if( Math.random() < chattiness_index ){
         var words = message.text.split(/\s*\b\s*/);
         var nouns = [];
         for (var i = 0; i < words.length; i++) {
