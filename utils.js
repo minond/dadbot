@@ -2,16 +2,15 @@
 
 var assert = require('assert');
 
-function test(res, val, msg) {
-    if (!process.env.DEBUG || !process.env.debug) {
+function test(check, msg) {
+    if (!process.env.DEBUG && !process.env.debug) {
         return;
     }
 
     try {
-        assert(res === val);
+        assert(check);
     } catch (err) {
         console.error('ERROR: %s', msg || 'failed assertion');
-        console.error('expected "%s" but got "%s"', val, res);
         console.error(err);
     }
 }
