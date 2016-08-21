@@ -46,17 +46,11 @@ controller.hears(['really (.*)', 'real (.*)', 'kindof (.*)', 'completely (.*)', 
 });
 
 controller.hears('', 'direct_message,direct_mention,mention,ambient', function(bot, message) {
-    if( Math.random() < chattiness_index ){
-        var words = message.text.split(/\s*\b\s*/);
-        var nouns = [];
-        for (var i = 0; i < words.length; i++) {
-            if (lexicon.isNoun(words[i])){
-                nouns.push(words[i]);
-            }
-        }
+    if (Math.random() < chattiness_index) {
+        var nouns = responses.find_nouns(message.text);
 
         if(nouns.length > 0){
-            var gif_url = post_a_gif(nouns, message);
+            post_a_gif(nouns, message);
         }
     }
 });
