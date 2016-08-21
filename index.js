@@ -10,6 +10,8 @@ var Botkit = require('botkit');
 var responses = require('./responses');
 var request = require('request');
 
+var chattiness_index = 1;
+
 var controller = Botkit.slackbot({
     debug: process.env.DEBUG || process.env.debug
 });
@@ -28,9 +30,8 @@ controller.hears('(^|\W)i[\'m|\s{0,}am]{0,}(.+)', 'direct_message,direct_mention
     }
 });
 
-controller.hears('', 'direct_message,direct_mention,mention,ambient', function(bot, message) {
+controller.hears(['really', 'completely', 'totally', 'majorly', 'utterly', 'wholly', 'absolutely', 'pretty'], 'direct_message,direct_mention,mention,ambient', function(bot, message) {
     var words = message.text.split(/\s*\b\s*/);
-    var nouns = [];
     for (var i = 0; i < words.length; i++) {
         if( lexicon.isAdjective(words[i]) == true && words.length > 1){
             var rhymes = lexicon.rhymes(words[i+1]);
@@ -38,12 +39,23 @@ controller.hears('', 'direct_message,direct_mention,mention,ambient', function(b
                 var random_id = Math.random()*rhymes.length|0
                 return bot.reply(message, "More like " + words[i] + " " + rhymes[random_id]);
             }
-        } else if (lexicon.isNoun(words[i])){
-            nouns.push(words[i]);
         }
     }
-    if(nouns.length > 0){
-        var gif_url = post_a_gif(nouns, message);
+});
+
+controller.hears('', 'direct_message,direct_mention,mention,ambient', function(bot, message) {
+    if( Math.random() < chattiness_index ){
+        var words = message.text.split(/\s*\b\s*/);
+        var nouns = [];
+        for (var i = 0; i < words.length; i++) {
+            if (lexicon.isNoun(words[i])){
+                nouns.push(words[i]);
+            }
+        }
+
+        if(nouns.length > 0){
+            var gif_url = post_a_gif(nouns, message);
+        }
     }
 });
 
