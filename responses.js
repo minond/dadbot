@@ -46,7 +46,7 @@ function best_joke_comeback(str) {
         }, {});
     }
 
-    return best_joke_comeback.jokes[3];
+    return best_joke_comeback.jdict[find_noun(str)];
 }
 
 module.exports = {
