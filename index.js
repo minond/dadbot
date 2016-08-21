@@ -45,6 +45,14 @@ controller.hears(['really (.*)', 'real (.*)', 'kindof (.*)', 'completely (.*)', 
     }
 });
 
+controller.hears(Object.keys(responses.JOKES_BY_NOUN), 'ambient', function (bot, message) {
+    var joke = responses.best_joke_comeback(message.text);
+
+    if (joke) {
+        bot.reply(message, joke);
+    }
+});
+
 controller.hears('', 'direct_message,direct_mention,mention,ambient', function(bot, message) {
     if( Math.random() < chattiness_index ){
         var words = message.text.split(/\s*\b\s*/);
