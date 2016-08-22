@@ -2,6 +2,7 @@
 
 ```bash
 npm install
-export debug=true # for test/debug mode
-token=<yourslacktoken> node index
+export DEBUG=true
+export SLACK_TOKEN=...
+node index
 ```
