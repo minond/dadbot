@@ -3,7 +3,7 @@
 var assert = require('assert');
 
 function test(check, msg) {
-    if (!process.env.DEBUG && !process.env.debug) {
+    if (!process.env.DEBUG) {
         return;
     }
 

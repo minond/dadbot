@@ -1,6 +1,6 @@
 'use strict';
 
-if (!process.env.token) {
+if (!process.env.SLACK_TOKEN) {
     console.log('Error: Specify token in environment');
     process.exit(1);
 }
@@ -14,11 +14,11 @@ var sentiment = require('sentiment');
 var chattiness_index = 0.1;
 
 var controller = Botkit.slackbot({
-    debug: process.env.DEBUG || process.env.debug
+    debug: process.env.DEBUG
 });
 
 var bot = controller.spawn({
-    token: process.env.token
+    token: process.env.SLACK_TOKEN
 }).startRTM();
 
 var lexicon = new Rita.RiLexicon();
