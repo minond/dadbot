@@ -11,7 +11,7 @@ var responses = require('./responses');
 var request = require('request');
 var sentiment = require('sentiment');
 
-var chattiness_index = 1;
+var chattiness_index = 0.1;
 
 var controller = Botkit.slackbot({
     debug: process.env.DEBUG || process.env.debug
